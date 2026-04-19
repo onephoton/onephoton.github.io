@@ -1,10 +1,629 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>OnePhoton Site</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exotic Smoke & Vape Shop — Demo Site</title>
+  <meta name="description" content="Demo storefront website for Exotic Smoke & Vape Shop." />
+  <style>
+    :root{
+      --bg:#0a0a0b;
+      --panel:#111215;
+      --panel-2:#17181d;
+      --muted:#b7bcc7;
+      --text:#f5f7fb;
+      --amber:#f6b638;
+      --amber-2:#ffd470;
+      --violet:#a855f7;
+      --cyan:#38bdf8;
+      --border:rgba(255,255,255,.10);
+      --shadow:0 18px 50px rgba(0,0,0,.35);
+      --radius:24px;
+      --radius-lg:32px;
+      --max:1200px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(246,182,56,.12), transparent 22%),
+        radial-gradient(circle at left center, rgba(168,85,247,.10), transparent 20%),
+        linear-gradient(180deg, #0b0b0d 0%, #0e1015 100%);
+      line-height:1.6;
+    }
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{width:min(var(--max), calc(100% - 32px)); margin:0 auto}
+    .topbar{
+      text-align:center;
+      padding:10px 16px;
+      background:rgba(246,182,56,.10);
+      color:#ffe2a3;
+      border-bottom:1px solid rgba(246,182,56,.20);
+      font-size:.94rem;
+    }
+
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(10,10,11,.72);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+    .brand-badge{
+      width:38px;height:38px;border-radius:14px;
+      background:linear-gradient(135deg, var(--amber), var(--violet));
+      display:grid;place-items:center;
+      color:#161616;font-weight:900;
+      box-shadow: var(--shadow);
+    }
+    .nav-links{
+      display:flex; gap:18px; flex-wrap:wrap;
+      color:var(--muted); font-size:.96rem;
+    }
+    .nav-links a:hover{color:var(--text)}
+    .nav-cta{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:11px 16px;
+      border-radius:16px;
+      background:var(--amber);
+      color:#1d1a11;
+      font-weight:700;
+      box-shadow:0 10px 30px rgba(246,182,56,.22);
+    }
+
+    .hero{
+      padding:72px 0 42px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:28px;
+      align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:#dde2ea;
+      font-size:.92rem;
+    }
+    h1{
+      font-size:clamp(2.2rem, 5vw, 4.7rem);
+      line-height:1.02;
+      letter-spacing:-.03em;
+      margin:18px 0 0;
+      max-width:12ch;
+    }
+    .lead{
+      max-width:64ch;
+      color:var(--muted);
+      font-size:1.08rem;
+      margin-top:20px;
+    }
+    .hero-actions{
+      display:flex; flex-wrap:wrap; gap:12px; margin-top:26px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 18px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      font-weight:700;
+      transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.08)}
+    .btn-primary{
+      background:var(--amber);
+      color:#1d1a11;
+      border-color:transparent;
+      box-shadow:0 12px 32px rgba(246,182,56,.2);
+    }
+
+    .hero-side{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
+      border:1px solid var(--border);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .eyebrow{
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.78rem;
+      color:var(--amber-2);
+    }
+    .eyebrow.violet{color:#d8b6ff}
+    .eyebrow.cyan{color:#98e6ff}
+    .big{
+      font-size:1.65rem;
+      font-weight:800;
+      margin-top:8px;
+    }
+    .muted{color:var(--muted)}
+    .map-box, .visual-box{
+      height:140px;
+      border-radius:22px;
+      margin-top:18px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        linear-gradient(135deg, rgba(56,189,248,.12), rgba(246,182,56,.08)),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.04));
+      display:grid;
+      place-items:center;
+      color:#bcc4d1;
+      text-align:center;
+      padding:14px;
+      font-size:.95rem;
+    }
+    .signal-list{
+      display:grid; gap:10px; margin-top:16px;
+    }
+    .signal{
+      border:1px solid rgba(255,255,255,.06);
+      background:rgba(0,0,0,.18);
+      padding:14px 16px;
+      border-radius:18px;
+      color:#e3e7ef;
+    }
+
+    .benefits{
+      padding:16px 0 8px;
+    }
+    .grid-4{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:14px;
+    }
+    .mini-card{
+      padding:18px;
+      border-radius:20px;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      color:#dde3ec;
+      box-shadow:var(--shadow);
+    }
+
+    section.section{padding:56px 0}
+    .section-head{
+      display:flex; align-items:end; justify-content:space-between; gap:20px; flex-wrap:wrap;
+      margin-bottom:26px;
+    }
+    h2{
+      font-size:clamp(1.8rem, 3vw, 3rem);
+      line-height:1.1;
+      letter-spacing:-.02em;
+      margin:.2rem 0 0;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .feature-card{
+      padding:22px;
+      border-radius:28px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      box-shadow:var(--shadow);
+    }
+    .art{
+      height:150px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(circle at top left, rgba(246,182,56,.22), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(168,85,247,.16), transparent 30%),
+        radial-gradient(circle at center, rgba(56,189,248,.12), transparent 25%),
+        linear-gradient(135deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+    }
+    .feature-card h3{font-size:1.24rem; margin:16px 0 8px}
+    .feature-card p{color:var(--muted); margin:0}
+
+    .band{
+      background:rgba(255,255,255,.045);
+      border-top:1px solid rgba(255,255,255,.08);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .two-col{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+    }
+    .stat-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:20px;
+    }
+    .stat{
+      border-radius:20px;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      padding:18px;
+    }
+    .stat strong{
+      display:block;
+      font-size:2rem;
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .hours-list{
+      display:grid; gap:10px; margin-top:16px;
+    }
+    .hours-row{
+      display:flex; justify-content:space-between; gap:14px;
+      padding:14px 16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--border);
+      color:#e7ebf2;
+    }
+    .hours-row span:last-child{color:#bfc6d1}
+
+    .signup{
+      border-radius:22px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+      padding:18px;
+      margin-top:20px;
+    }
+    .signup-row{
+      display:flex; gap:12px; margin-top:14px; flex-wrap:wrap;
+    }
+    input[type="text"], input[type="tel"], input[type="email"]{
+      flex:1 1 260px;
+      min-height:48px;
+      padding:0 14px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      color:var(--text);
+      outline:none;
+    }
+    .faq-list{display:grid; gap:12px}
+    details{
+      border-radius:18px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+      padding:16px 18px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{color:var(--muted); margin:10px 0 0}
+
+    .cta-wrap{
+      border-radius:34px;
+      border:1px solid rgba(246,182,56,.18);
+      background:
+        radial-gradient(circle at top left, rgba(246,182,56,.14), transparent 22%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,.12), transparent 24%),
+        radial-gradient(circle at center right, rgba(168,85,247,.12), transparent 20%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.03));
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+    .cta-grid{
+      display:grid;
+      grid-template-columns:1.3fr .7fr;
+      gap:20px;
+      align-items:center;
+    }
+    .package{
+      border-radius:24px;
+      background:rgba(10,10,11,.55);
+      border:1px solid rgba(255,255,255,.10);
+      padding:22px;
+    }
+    .price{
+      font-size:2.2rem;
+      font-weight:900;
+      line-height:1;
+      margin-top:10px;
+    }
+    .package ul{
+      margin:18px 0 0;
+      padding-left:18px;
+      color:#e4e9f2;
+    }
+    .package li{margin:8px 0}
+
+    footer{
+      padding:30px 0 50px;
+      color:#aeb6c2;
+    }
+    .footer{
+      display:flex; gap:18px; justify-content:space-between; align-items:center; flex-wrap:wrap;
+      border-top:1px solid rgba(255,255,255,.08);
+      padding-top:20px;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid, .two-col, .cta-grid{grid-template-columns:1fr}
+      .grid-4{grid-template-columns:repeat(2,1fr)}
+      .grid-3{grid-template-columns:1fr}
+      .hero-side{grid-template-columns:1fr}
+      .stat-grid{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 640px){
+      .nav-inner{align-items:flex-start; flex-direction:column}
+      .grid-4{grid-template-columns:1fr}
+      .container{width:min(var(--max), calc(100% - 24px))}
+      .hero{padding-top:44px}
+      .big{font-size:1.45rem}
+      .btn, .nav-cta{width:100%}
+      .hero-actions{display:grid}
+      .hours-row{font-size:.96rem}
+    }
+  </style>
 </head>
 <body>
-  <h1>🚀 Site is LIVE</h1>
-  <p>If you see this, GitHub Pages is working.</p>
+  <div class="topbar">
+    21+ only. Demo concept for a compliant local-storefront website with age-gate messaging and an in-store conversion focus.
+  </div>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <div class="brand-badge">ES</div>
+        <div>
+          <div>Exotic Smoke &amp; Vape Shop</div>
+          <div class="muted" style="font-size:.85rem;font-weight:600">Demo storefront concept</div>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="#categories">Categories</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#hours">Hours</a>
+        <a href="#vip">VIP List</a>
+        <a href="#offer">Starter Package</a>
+      </div>
+
+      <a class="nav-cta" href="https://maps.google.com/?q=3311+Sheridan+Dr+Amherst+NY+14226" target="_blank" rel="noopener">Get Directions</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="pill">Demo storefront concept for Exotic Smoke &amp; Vape Shop</div>
+        <h1>A real website built to turn search traffic into store visits.</h1>
+        <p class="lead">
+          This demo gives Exotic Smoke &amp; Vape Shop a polished home on the web: clear hours, local trust signals, product categories, strong mobile usability, and a repeat-customer capture funnel.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://maps.google.com/?q=3311+Sheridan+Dr+Amherst+NY+14226" target="_blank" rel="noopener">Get Directions</a>
+          <a class="btn" href="tel:+17165551234">Call the Shop</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="card">
+          <div class="eyebrow">Location</div>
+          <div class="big">3311 Sheridan Dr</div>
+          <div class="muted">Buffalo / Amherst, NY 14226</div>
+          <div class="map-box">Embedded map or directions block can go here.</div>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow violet">Trust Signals</div>
+          <div class="signal-list">
+            <div class="signal">4.8-star public rating</div>
+            <div class="signal">500+ customer reviews</div>
+            <div class="signal">Open daily until midnight</div>
+            <div class="signal">Convenient Sheridan Drive location</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="benefits">
+    <div class="container grid-4">
+      <div class="mini-card">Real website instead of a link page</div>
+      <div class="mini-card">Faster trust with first-time customers</div>
+      <div class="mini-card">Cleaner mobile experience for directions, hours, and calls</div>
+      <div class="mini-card">Email/SMS signup funnel for repeat visits and new drops</div>
+    </div>
+  </div>
+
+  <section class="section" id="categories">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">What the site can show</div>
+          <h2>Built for local conversion, not clutter.</h2>
+        </div>
+        <p class="muted" style="max-width:62ch">
+          The first version should answer what customers already ask every day: where are you, when are you open, what do you carry, and why should I come here instead of another shop?
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <article class="feature-card">
+          <div class="art"></div>
+          <h3>Vapes &amp; Devices</h3>
+          <p>Feature best-selling disposables, pod systems, starter kits, and premium hardware in a clean menu-style layout.</p>
+        </article>
+        <article class="feature-card">
+          <div class="art"></div>
+          <h3>Hookah, Glass &amp; Accessories</h3>
+          <p>Showcase in-store variety with a few featured collections and rotating staff picks to encourage larger basket sizes.</p>
+        </article>
+        <article class="feature-card">
+          <div class="art"></div>
+          <h3>Cigars, Wraps &amp; Essentials</h3>
+          <p>Make it easy for walk-in customers to confirm the shop carries their everyday brands before they drive over.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="reviews">
+    <div class="container two-col">
+      <div class="card">
+        <div class="eyebrow violet">Reputation section</div>
+        <h2>Let the reviews do the selling.</h2>
+        <p class="muted">
+          The business already has strong public trust. A proper website should surface that immediately with rating badges, review snippets, and a photo-forward layout so first-time visitors feel confident before they arrive.
+        </p>
+
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>4.8★</strong>
+            <div class="muted">Average public rating</div>
+          </div>
+          <div class="stat">
+            <strong>500+</strong>
+            <div class="muted">Public reviews</div>
+          </div>
+          <div class="stat">
+            <strong>7 days</strong>
+            <div class="muted">Open every day</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="hours">
+        <div class="eyebrow cyan">Hours</div>
+        <h2>Open late, every day.</h2>
+        <div class="hours-list">
+          <div class="hours-row"><span>Monday</span><span>8:00 AM – 12:00 AM</span></div>
+          <div class="hours-row"><span>Tuesday</span><span>8:00 AM – 12:00 AM</span></div>
+          <div class="hours-row"><span>Wednesday</span><span>8:00 AM – 12:00 AM</span></div>
+          <div class="hours-row"><span>Thursday</span><span>8:00 AM – 12:00 AM</span></div>
+          <div class="hours-row"><span>Friday</span><span>8:00 AM – 12:00 AM</span></div>
+          <div class="hours-row"><span>Saturday</span><span>8:00 AM – 12:00 AM</span></div>
+          <div class="hours-row"><span>Sunday</span><span>8:00 AM – 12:00 AM</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="vip">
+    <div class="container two-col">
+      <div class="card">
+        <div class="eyebrow">Retention add-on</div>
+        <h2>Turn walk-ins into repeat customers.</h2>
+        <p class="muted">
+          This is where the website becomes a business tool instead of just a brochure. Add a simple rewards signup, SMS drop alerts, or a VIP list for restocks and weekly deals.
+        </p>
+
+        <div class="signup">
+          <div class="muted" style="font-size:.92rem">Example signup CTA</div>
+          <div style="font-size:1.2rem;font-weight:800;margin-top:6px">
+            Get text alerts for new arrivals, restocks, and exclusive in-store deals.
+          </div>
+          <form class="signup-row" onsubmit="event.preventDefault(); alert('Demo only — connect this form to email or SMS later.');">
+            <input type="tel" placeholder="Mobile number" />
+            <button class="btn btn-primary" type="submit">Join VIP List</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow cyan">FAQ</div>
+        <h2>Answer the questions customers ask constantly.</h2>
+        <div class="faq-list">
+          <details>
+            <summary>Do you offer online ordering?</summary>
+            <p>This demo focuses on driving foot traffic first. A later phase could add compliant pickup or catalog workflows depending on legal and platform requirements.</p>
+          </details>
+          <details>
+            <summary>Can the site show featured brands?</summary>
+            <p>Yes. The homepage can highlight best sellers, new arrivals, and categories without needing full ecommerce right away.</p>
+          </details>
+          <details>
+            <summary>Can you capture repeat customers?</summary>
+            <p>Yes. A text or email signup can be added for restock notices, flash deals, loyalty offers, and event announcements.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="offer">
+    <div class="container">
+      <div class="cta-wrap">
+        <div class="cta-grid">
+          <div>
+            <div class="eyebrow">Recommended offer</div>
+            <h2>Launch a conversion-focused local website first, then layer on retention.</h2>
+            <p class="lead" style="margin-top:14px">
+              The biggest gap right now is that the shop appears to rely on Google, Instagram, and a minimal link presence rather than a true website. This demo fills that gap with stronger trust, cleaner branding, and an actual funnel for repeat business.
+            </p>
+          </div>
+
+          <aside class="package">
+            <div class="muted" style="text-transform:uppercase;letter-spacing:.18em;font-size:.76rem">Suggested starter package</div>
+            <div class="price">$400–$750</div>
+            <div class="muted" style="margin-top:10px">One-time build for a modern local storefront site.</div>
+            <ul>
+              <li>Home page + categories + contact</li>
+              <li>Mobile-first design</li>
+              <li>Google Maps, hours, call buttons</li>
+              <li>Review showcase</li>
+              <li>VIP signup / retention CTA</li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer">
+      <div>
+        <strong>Exotic Smoke &amp; Vape Shop — Demo</strong><br />
+        <span class="muted">Single-file HTML concept for GitHub Pages deployment.</span>
+      </div>
+      <div class="muted">Replace placeholder phone, map, and photos before publishing publicly.</div>
+    </div>
+  </footer>
 </body>
 </html>
